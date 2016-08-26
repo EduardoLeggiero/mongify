@@ -3,9 +3,11 @@ Feature: Processing a translation
   As a user
   I want to be able to process a translation and move my data to mongodb!
 
-  Scenario: Process
+  Background:
   Given a database exists
   And a blank mongodb
+
+  Scenario: Process
   When I run mongify process spec/files/base_configuration.rb spec/files/translation.rb
   Then it succeeds
   And there should be 3 users in mongodb
@@ -16,8 +18,6 @@ Feature: Processing a translation
   And the post with title "Second Post" should have 2 comments
 
   Scenario: Processing while modifying embedding parent.
-  Given a database exists
-  And a blank mongodb
   When I run mongify process spec/files/base_configuration.rb spec/files/embedded_parent_translation.rb
   Then it succeeds
   And there should be 3 users in mongodb
@@ -25,8 +25,6 @@ Feature: Processing a translation
   And the third user's notify_by_email attribute should be false
 
   Scenario: Processing while deleting fields from embedding parent
-  Given a database exists
-  And a blank mongodb
   When I run mongify process spec/files/base_configuration.rb spec/files/deleting_fields_from_embedding_parent_translation.rb
   Then it succeeds
   And there should be 3 teams in mongodb
